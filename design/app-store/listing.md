@@ -4,7 +4,7 @@ Copy for App Store Connect, version 1.0. Limits are Apple's character limits.
 
 ## App information
 
-- **Name** (30): Screen Door
+- **Name** (30): Screen Door – Remote Desktop (the name under the icon stays "Screen Door")
 - **Subtitle** (30): See and control your Mac
 - **Primary category:** Utilities
 - **Secondary category:** Productivity
