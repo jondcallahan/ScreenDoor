@@ -3,90 +3,132 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Screen Door – See and control your Mac from iPhone, iPad and Vision Pro</title>
+<title>Screen Door - See and control your Mac from iPhone, iPad and Vision Pro</title>
 <meta name="description" content="Screen Door shows your Mac's screen on your iPhone, iPad or Apple Vision Pro, and lets you control it. It uses the Screen Sharing built into macOS. Free, private and open source.">
+<link rel="canonical" href="https://screendoor.net/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://screendoor.net/">
 <meta property="og:title" content="Screen Door">
 <meta property="og:description" content="See and control your Mac from your iPhone, iPad or Apple Vision Pro.">
 <meta property="og:image" content="https://screendoor.net/img/ipad-session.jpg">
-<link rel="icon" href="/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" as="image" href="/img/ipad-session.jpg" fetchpriority="high">
 <link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Screen Door",
+  "description": "See and control your Mac from your iPhone, iPad or Apple Vision Pro, using the Screen Sharing built into macOS.",
+  "url": "https://screendoor.net/",
+  "image": "https://screendoor.net/img/icon.png",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "iOS, iPadOS, visionOS",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
 </head>
 <body>
-<header class="hero">
-  <div class="wrap">
-    <img class="icon" src="/img/icon.png" width="128" height="128" alt="">
+<header class="hero wrap">
+  <div class="hero-copy">
+    <img class="hero-icon" src="/img/icon-256.png" width="88" height="88" alt="">
+    <p class="eyebrow">Coming soon to the App Store</p>
     <h1>Screen Door</h1>
-    <p class="lede">See and control your Mac from your iPhone, iPad or Apple&nbsp;Vision&nbsp;Pro.</p>
-    <p class="cta"><span class="badge">Coming soon to the App&nbsp;Store</span></p>
-    <p class="small">Free. No account. No data collected.</p>
+    <p class="lede">See and control your Mac from your iPhone, iPad or Apple&nbsp;Vision&nbsp;Pro. <strong>The missing companion to macOS&nbsp;Screen&nbsp;Sharing.</strong></p>
+    <!-- TODO: replace href with the App Store URL at launch, and swap the button for Apple's official "Download on the App Store" badge. -->
+    <a class="button" href="#">View on the App Store</a>
   </div>
-  <div class="hero-shots wrap">
-    <img class="shot ipad" src="/img/ipad-session.jpg" alt="A Mac's desktop, with a Notes window, shown full screen on iPad">
-    <img class="shot phone" src="/img/iphone-session.jpg" alt="The same Mac's Notes window, zoomed in on iPhone">
+  <div class="hero-stage">
+    <div class="device ipad stage-ipad"><div class="device-body"><img src="/img/ipad-session.jpg" width="1400" height="1050" fetchpriority="high" alt="A Mac's desktop, with a Notes window, shown full screen on iPad"></div></div>
+    <div class="device iphone stage-phone"><div class="device-body"><img src="/img/iphone-session.jpg" width="552" height="1200" alt="The same Mac's Notes window, zoomed in on iPhone"></div></div>
   </div>
 </header>
 
 <main>
-  <section class="wrap features">
-    <div class="feature">
+  <section class="statement wrap reveal">
+    <p>Free. No account. No data collected.</p>
+  </section>
+
+  <section class="wrap bento" id="features">
+    <div class="cell cell-find reveal">
+      <h2>Finds your Macs</h2>
+      <p>Macs on your network show up by themselves, each with the right icon. Tap one to add it.</p>
+      <div class="device-slot">
+        <div class="device iphone"><div class="device-body"><img src="/img/iphone-list.jpg" width="552" height="1200" loading="lazy" alt="Screen Door's list of Macs on iPhone, with a MacBook Pro, Studio, Mac mini and iMac"></div></div>
+      </div>
+    </div>
+    <div class="cell cell-install tint reveal">
       <h2>Nothing to install on your Mac</h2>
       <p>Screen Door uses the Screen Sharing built into macOS. Turn it on, then sign in with the same username and password you use on the Mac.</p>
     </div>
-    <div class="feature">
-      <h2>Finds your Macs</h2>
-      <p>Macs on your network show up by themselves, each with the right icon. Tap one to add it.</p>
-    </div>
-    <div class="feature">
+    <div class="cell cell-away reveal">
       <h2>At home or away</h2>
       <p>Give a Mac its Tailscale address too. Screen Door uses your local network when it can, and Tailscale or another VPN when you're out.</p>
     </div>
-    <div class="feature">
+    <div class="cell cell-touch accent mesh reveal">
       <h2>Made for touch</h2>
       <p>Look around and zoom without touching the Mac, or switch to Mouse mode to click, scroll and drag.</p>
     </div>
-    <div class="feature">
-      <h2>Like being at your desk on iPad</h2>
-      <p>Use a trackpad, mouse or hardware keyboard. Each Mac opens in its own window, so you can keep two side by side.</p>
+    <div class="cell cell-ipad tint reveal">
+      <div class="cell-text">
+        <h2>Like being at your desk on iPad</h2>
+        <p>Use a trackpad, mouse or hardware keyboard. Each Mac opens in its own window, so you can keep two side by side.</p>
+      </div>
+      <div class="device-slot">
+        <div class="device ipad"><div class="device-body"><img src="/img/ipad-session.jpg" width="1400" height="1050" loading="lazy" alt=""></div></div>
+      </div>
     </div>
-    <div class="feature">
+    <div class="cell cell-private reveal">
       <h2>Private and open source</h2>
-      <p>No account, no analytics, no tracking. The code is <a href="https://github.com/jondcallahan/ScreenDoor">on GitHub</a>.</p>
+      <p>No account, no analytics, no tracking. The code is on GitHub.</p>
     </div>
   </section>
 
-  <section class="band">
-    <div class="wrap split">
-      <div>
+  <section class="wrap keys">
+    <div class="keys-panel reveal">
+      <div class="keys-copy">
         <h2>Every key a Mac needs</h2>
         <p>Command, Option, Control, Shift, esc, tab and the arrow keys sit right above the keyboard. Tap a modifier, then the key, for shortcuts like ⌘C.</p>
       </div>
-      <img class="shot" src="/img/iphone-keys.jpg" alt="Screen Door on iPhone with the keyboard and a row of Mac keys">
+      <div class="device iphone keys-phone"><div class="device-body"><img src="/img/iphone-keys.jpg" width="552" height="1200" loading="lazy" alt="Screen Door on iPhone with the keyboard and a row of Mac keys"></div></div>
     </div>
   </section>
 
-  <section class="wrap vision">
-    <h2>On Apple Vision Pro, as big as you like</h2>
-    <p>Look at something and tap to click it. The window takes the shape of your Mac's screen, and you can put it anywhere.</p>
-    <img class="shot wide" src="/img/vision-session.jpg" alt="A Mac's desktop floating in a living room on Apple Vision Pro">
+  <section class="vision">
+    <div class="wrap vision-copy reveal">
+      <h2>On Apple Vision Pro, as big as you like</h2>
+      <p>Look at something and tap to click it. The window takes the shape of your Mac's screen, and you can put it anywhere.</p>
+    </div>
+    <div class="wrap-wide reveal">
+      <img class="vision-shot" src="/img/vision-session.jpg" width="1800" height="1012" loading="lazy" alt="A Mac's desktop floating in a living room on Apple Vision Pro">
+    </div>
   </section>
 
-  <section class="wrap setup">
-    <h2>Set up in a minute</h2>
-    <ol>
-      <li>On your Mac, open System Settings &gt; General &gt; Sharing and turn on <b>Screen Sharing</b>.</li>
-      <li>Open Screen Door. Macs on your network appear in the list.</li>
-      <li>Tap your Mac and sign in with your Mac username and password.</li>
+  <section class="wrap setup" id="setup">
+    <h2 class="reveal">Set up in a minute</h2>
+    <ol class="steps">
+      <li class="reveal">On your Mac, open System Settings &gt; General &gt; Sharing and turn on <b>Screen Sharing</b>.</li>
+      <li class="reveal">Open Screen Door. Macs on your network appear in the list.</li>
+      <li class="reveal">Tap your Mac and sign in with your Mac username and password.</li>
     </ol>
-    <p class="note">Your password is stored in the Keychain on your device. Screen Door connects straight to your Mac. There are no Screen Door servers in between.</p>
+    <p class="note reveal">Your password is stored in the Keychain on your device. Screen Door connects straight to your Mac. There are no Screen Door servers in between.</p>
   </section>
 </main>
 
-<footer class="wrap">
-  <a href="/privacy">Privacy</a>
-  <a href="/support">Support</a>
-  <a href="https://github.com/jondcallahan/ScreenDoor">Source code</a>
-  <span>Mac, iPhone, iPad and Apple Vision Pro are trademarks of Apple Inc.</span>
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="/privacy">Privacy</a>
+      <a href="/support">Support</a>
+      <a href="https://github.com/jondcallahan/ScreenDoor">Source code</a>
+    </nav>
+    <p class="legal">Mac, iPhone, iPad and Apple Vision Pro are trademarks of Apple Inc.</p>
+  </div>
 </footer>
 </body>
 </html>

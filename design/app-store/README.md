@@ -16,3 +16,21 @@ To make them again:
    `xcrun simctl status_bar <device> override --time 9:41`.
 5. Add the captions: `swiftc -O source/compose.swift -o compose`, then
    `./compose <width> <height> raw.png out.png "Title" "Subtitle" <screenshot width fraction> <corner radius>`.
+
+## The mock Mac desktop
+
+`source/desktop.html` uses real images from `source/assets/`: a wallpaper and an album of
+photos from Unsplash (fetched through picsum.photos, Unsplash License), and the Dock icons
+exported from the macOS apps with `sips -s format png -Z 128 <App>.app/Contents/Resources/<icon>.icns`.
+
+## Updating the website screenshots without re-capturing
+
+`source/swap.swift` replaces the desktop inside an existing screenshot with a re-rendered one.
+It finds where the desktop sits (scale and offset), then changes only the pixels that still show
+the old desktop, so the app's own controls on top are kept.
+
+1. Render the old and new desktops with `snap.swift` at 1280×800 (it writes 2× pixels).
+2. `swiftc -O source/swap.swift -o swap`
+3. `./swap shot.jpg old.png new.png out.jpg [jpeg quality] [scale x y] [stop row]`
+   The optional `scale x y` gives a starting position when the screen is mostly covered
+   (the keyboard shot used `0.4728 -131.1 218.7 800`).
