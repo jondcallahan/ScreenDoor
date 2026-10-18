@@ -16,8 +16,6 @@ Copy for App Store Connect, version 1.0. Limits are Apple's character limits.
 - **Marketing URL:** https://screendoor.net
 - **Copyright:** 2026 Jon Callahan
 
-Until screendoor.net points at the site, use https://screendoor-one.vercel.app/privacy and /support.
-
 ## App privacy
 
 Data collection: **No, we do not collect data from this app.**
