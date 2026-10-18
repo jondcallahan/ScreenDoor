@@ -1,1 +1,8 @@
-{ "cleanUrls": true, "trailingSlash": false }
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.screendoor.net" }], "destination": "https://screendoor.net/:path*", "permanent": true },
+    { "source": "/:path*", "has": [{ "type": "host", "value": "screendoor-one.vercel.app" }], "destination": "https://screendoor.net/:path*", "permanent": true }
+  ]
+}
