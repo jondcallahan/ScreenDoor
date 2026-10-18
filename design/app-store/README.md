@@ -19,13 +19,10 @@ To make them again:
 
 ## The mock Mac desktop
 
-`source/desktop.html` uses real images from `source/assets/`: a wallpaper and an album of
-photos from Unsplash (fetched through picsum.photos, Unsplash License), and the Dock icons
+`source/desktop.html` uses real images from `source/assets/`: Apple's classic clownfish wallpaper
+(an upscale from https://www.reddit.com/r/wallpapers/comments/e7x2ty/), an album of photos from
+Unsplash (fetched through picsum.photos, Unsplash License), and the Dock icons
 exported from the macOS apps with `sips -s format png -Z 128 <App>.app/Contents/Resources/<icon>.icns`.
-
-The website screenshots use `source/desktop-clownfish.html`, the same desktop with Apple's classic
-clownfish wallpaper (`assets/wallpaper-clownfish.jpg`, an upscale from
-https://www.reddit.com/r/wallpapers/comments/e7x2ty/). The App Store screenshots still use `desktop.html`.
 
 ## Updating the website screenshots without re-capturing
 
@@ -39,3 +36,7 @@ the old desktop, so the app's own controls on top are kept.
    The optional `scale x y` gives a starting position when the screen is mostly covered
    (the keyboard shot used `0.4728 -131.1 218.7 800`, the iPhone session shot `0.4785 -48.9 216.9`
    and the Vision Pro shot `0.48 286 86`).
+
+The App Store screenshots were updated the same way, straight on the captioned PNGs. Keep only the
+pixels inside the device screen (the desktop can otherwise leak onto the blue background), and
+save without an alpha channel, which App Store Connect rejects.
