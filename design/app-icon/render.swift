@@ -1,5 +1,4 @@
-// Screen Door app icon: a white Mac and iPhone showing the same screen, on Apple's system blue
-// with a woven screen-door mesh.
+// Screen Door app icon: a solid laptop with an outlined iPhone in front, in white on a blue gradient.
 // swift design/app-icon/render.swift ScreenDoor/Assets.xcassets/AppIcon.appiconset/icon.png
 // Add `preview.png old-icon.png` to also write an old-vs-new comparison sheet.
 // Add `--vision DIR` instead to also write the Vision Pro icon's layers, back.png and front.png, to DIR.
@@ -9,7 +8,7 @@ let size: CGFloat = 1024
 let stroke: CGFloat = 50          // the laptop's base
 let gap: CGFloat = 32             // clear space between the laptop and the phone
 let bezel: CGFloat = 34           // the laptop screen's white border
-let phoneBezel: CGFloat = 30      // the phone's white border around its screen
+let phoneBezel: CGFloat = 40      // a touch heavier than the laptop's, as the phone is drawn smaller
 
 func rgb(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> CGColor {
     CGColor(srgbRed: r / 255, green: g / 255, blue: b / 255, alpha: 1)
@@ -20,7 +19,6 @@ let screen = CGRect(x: 0, y: 0, width: 520, height: 352)       // laptop lid, ou
 let base = CGRect(x: -58, y: screen.maxY, width: screen.width + 116, height: stroke)
 let phone = CGRect(x: 386, y: 102, width: 218, height: 362)     // overlaps the lid's right side
 let screenRadius: CGFloat = 46
-let artScale: CGFloat = 1.1
 let phoneRadius: CGFloat = 58
 
 let art = screen.union(base).union(phone)
@@ -35,21 +33,13 @@ func icon(background: Bool = true, art: Bool = true) -> CGImage {
                         bitmapInfo: (art && !background ? CGImageAlphaInfo.premultipliedLast : .noneSkipLast).rawValue)!
     ctx.translateBy(x: 0, y: size); ctx.scaleBy(x: 1, y: -1)   // y-down
     if background { drawBackground(ctx) }
-    if art {
-        // Scale the artwork up a little from the centre, so it fills the icon like Apple's do.
-        ctx.saveGState()
-        ctx.translateBy(x: size / 2, y: size / 2); ctx.scaleBy(x: artScale, y: artScale); ctx.translateBy(x: -size / 2, y: -size / 2)
-        drawArt(ctx)
-        ctx.restoreGState()
-    }
+    if art { drawArt(ctx) }
     return ctx.makeImage()!
 }
 
 func drawBackground(_ ctx: CGContext) {
-    // Apple's system blue (#007AFF), lifted a little at the top the way Apple's own icons are lit.
     let gradient = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB),
-                              colors: [rgb(64, 168, 255), rgb(0, 122, 255), rgb(0, 104, 232)] as CFArray,
-                              locations: [0, 0.55, 1])!
+                              colors: [rgb(75, 177, 255), rgb(11, 93, 243)] as CFArray, locations: [0, 1])!
     ctx.drawLinearGradient(gradient, start: .zero, end: CGPoint(x: 0, y: size), options: [])
     drawMesh(ctx)
 }
@@ -131,8 +121,14 @@ func drawArt(_ ctx: CGContext) {
     // The Mac's screen: a pale panel inside the white bezel, so the lid reads as a display.
     let display = CGRect(x: lid.minX + bezel, y: lid.minY + bezel,
                          width: lid.width - bezel * 2, height: lid.height - bezel * 1.6)
-    drawScreen(ctx, CGPath(roundedRect: display, cornerWidth: screenRadius - bezel * 0.6,
-                           cornerHeight: screenRadius - bezel * 0.6, transform: nil), in: display)
+    ctx.saveGState()
+    ctx.addPath(CGPath(roundedRect: display, cornerWidth: screenRadius - bezel * 0.6,
+                       cornerHeight: screenRadius - bezel * 0.6, transform: nil))
+    ctx.clip()
+    let screenGradient = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB),
+                                    colors: [rgb(170, 220, 255), rgb(120, 190, 255)] as CFArray, locations: [0, 1])!
+    ctx.drawLinearGradient(screenGradient, start: CGPoint(x: 0, y: display.minY), end: CGPoint(x: 0, y: display.maxY), options: [])
+    ctx.restoreGState()
     let foot = place(base)
     ctx.addPath(CGPath(roundedRect: foot, cornerWidth: stroke / 2, cornerHeight: stroke / 2, transform: nil))
     ctx.fillPath()
@@ -145,23 +141,13 @@ func drawArt(_ ctx: CGContext) {
     ctx.setBlendMode(.normal)
     ctx.endTransparencyLayer()
 
-    // The phone: a white body showing the same screen as the Mac.
+    // The phone, as an outline. Its screen shows the background.
     ctx.setFillColor(.white)
-    ctx.addPath(CGPath(roundedRect: handset, cornerWidth: phoneRadius, cornerHeight: phoneRadius, transform: nil))
-    ctx.fillPath()
+    let phonePath = CGMutablePath()
+    phonePath.addRoundedRect(in: handset, cornerWidth: phoneRadius, cornerHeight: phoneRadius)
     let phoneInner = handset.insetBy(dx: phoneBezel, dy: phoneBezel)
-    let innerRadius = phoneRadius - phoneBezel * 0.7
-    drawScreen(ctx, CGPath(roundedRect: phoneInner, cornerWidth: innerRadius, cornerHeight: innerRadius, transform: nil), in: phoneInner)
-}
-
-/// A screen: pale blue, brighter at the top.
-func drawScreen(_ ctx: CGContext, _ path: CGPath, in rect: CGRect) {
-    ctx.saveGState()
-    ctx.addPath(path); ctx.clip()
-    let screenGradient = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB),
-                                    colors: [rgb(196, 230, 255), rgb(128, 192, 255)] as CFArray, locations: [0, 1])!
-    ctx.drawLinearGradient(screenGradient, start: CGPoint(x: 0, y: rect.minY), end: CGPoint(x: 0, y: rect.maxY), options: [])
-    ctx.restoreGState()
+    phonePath.addRoundedRect(in: phoneInner, cornerWidth: phoneRadius - phoneBezel * 0.6, cornerHeight: phoneRadius - phoneBezel * 0.6)
+    ctx.addPath(phonePath); ctx.fillPath(using: .evenOdd)
 }
 
 func write(_ image: CGImage, to path: String) {
