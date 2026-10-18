@@ -25,6 +25,8 @@ Requires Xcode 26 or later and [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 2. Run `xcodegen generate`.
 3. Open `ScreenDoor.xcodeproj` and run on your device.
 
+In T3 Code, import the actions from `t3.json` in Settings → Project. **Generate Xcode project** runs XcodeGen, and **Preview website** serves `site/` at `http://127.0.0.1:8000` and opens the desktop preview panel. Stop its terminal command with Ctrl+C when finished. Requires Python 3 for the website preview.
+
 ## Security
 
 When you sign in, your Mac password is encrypted on its way to the Mac. After that, standard VNC doesn't encrypt the session, so the screen and your keystrokes travel unencrypted, and VNC can't confirm that you've reached your own Mac. That's fine on your home network. From anywhere else, connect over a VPN such as Tailscale, and don't expose port 5900 to the internet. Screen Door prefers a Mac's local address when something answers there, so on a network you don't trust, leave the Local address empty to always use Tailscale.

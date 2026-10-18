@@ -1,0 +1,18 @@
+{
+  "$schema": "https://t3.codes/schema/t3.json",
+  "iconPath": "site/favicon.png",
+  "scripts": [
+    {
+      "name": "Generate Xcode project",
+      "command": "xcodegen generate",
+      "icon": "configure"
+    },
+    {
+      "name": "Preview website",
+      "command": "python3 scripts/preview-site.py",
+      "icon": "play",
+      "previewUrl": "http://127.0.0.1:8000",
+      "autoOpenPreview": true
+    }
+  ]
+}
