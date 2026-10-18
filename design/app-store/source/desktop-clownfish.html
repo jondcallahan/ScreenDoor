@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:800px;overflow:hidden;font-family:-apple-system,"SF Pro Text",system-ui;-webkit-font-smoothing:antialiased}
+body{background:#28344a url(assets/wallpaper-clownfish.jpg) center/cover no-repeat;}
+.menubar{position:absolute;top:0;left:0;right:0;height:24px;background:rgba(30,30,50,.35);backdrop-filter:blur(20px);color:#fff;font-size:13px;display:flex;align-items:center;padding:0 14px;gap:20px}
+.menubar b{font-weight:600}.menubar .r{margin-left:auto;display:flex;gap:16px;align-items:center}
+.win{position:absolute;background:#fafafc;border-radius:12px;box-shadow:0 22px 60px rgba(0,0,0,.45),0 0 0 .5px rgba(0,0,0,.3);overflow:hidden}
+.bar{height:44px;display:flex;align-items:center;padding:0 14px;gap:8px;border-bottom:1px solid #e3e3e8;background:#f3f3f6}
+.dot{width:12px;height:12px;border-radius:50%}.d1{background:#ff5f57}.d2{background:#febc2e}.d3{background:#28c840}
+.title{font-size:13px;font-weight:600;color:#333;margin-left:12px}
+.notes{left:90px;top:70px;width:560px;height:520px;display:flex;flex-direction:column}
+.notes .body{display:flex;flex:1}
+.side{width:180px;background:#ececf0;border-right:1px solid #e0e0e6;padding:12px 8px;font-size:12px;color:#444}
+.side div{padding:7px 10px;border-radius:7px;margin-bottom:3px}.side .sel{background:#ffd54a;color:#222;font-weight:600}
+.side small{display:block;color:#888;font-size:11px;margin-top:2px;font-weight:400}
+.doc{flex:1;padding:22px 26px;color:#222}
+.doc h1{font-size:24px;margin-bottom:6px}.doc .date{color:#999;font-size:12px;margin-bottom:16px}
+.doc p,.doc li{font-size:14px;line-height:1.55}.doc ul{margin:10px 0 0 18px}.doc li{margin-bottom:6px}
+.chk{display:inline-block;width:14px;height:14px;border:1.5px solid #bbb;border-radius:50%;margin-right:8px;vertical-align:-2px}
+.chk.on{background:#ffb800;border-color:#ffb800}
+.photos{left:600px;top:150px;width:600px;height:440px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:10px}
+.ph{height:120px;border-radius:6px}
+.p1{background:#ccc url(assets/photos/13.jpg) center/cover}.p2{background:#ccc url(assets/photos/14.jpg) center/cover}.p3{background:#ccc url(assets/photos/37.jpg) center/cover}.p4{background:#ccc url(assets/photos/124.jpg) center/cover}.p5{background:#ccc url(assets/photos/162.jpg) center/cover}.p6{background:#ccc url(assets/photos/213.jpg) center/cover}.p7{background:#ccc url(assets/photos/218.jpg) center/cover}.p8{background:#ccc url(assets/photos/270.jpg) center/cover}.p9{background:#ccc url(assets/photos/271.jpg) center/cover}
+.dock{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:10px;padding:8px 12px;background:rgba(255,255,255,.22);backdrop-filter:blur(20px);border-radius:22px;border:.5px solid rgba(255,255,255,.35)}
+.app{width:52px;height:52px;background:center/contain no-repeat}
+.a1{background-image:url(assets/dock/finder.png)}.a2{background-image:url(assets/dock/safari.png)}.a3{background-image:url(assets/dock/messages.png)}.a4{background-image:url(assets/dock/mail.png)}.a5{background-image:url(assets/dock/photos.png)}.a6{background-image:url(assets/dock/notes.png)}.a7{background-image:url(assets/dock/calendar.png)}.a8{background-image:url(assets/dock/music.png)}
+</style></head><body>
+<div class="menubar"><b>&#xF8FF;</b><b>Notes</b><span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Window</span><span>Help</span>
+<span class="r"><span>100%</span><span>Fri Oct 16</span><span>9:41 AM</span></span></div>
+<div class="win photos"><div class="bar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="title">Coast Trip</span></div>
+<div class="grid"><div class="ph p1"></div><div class="ph p2"></div><div class="ph p3"></div><div class="ph p4"></div><div class="ph p5"></div><div class="ph p6"></div><div class="ph p7"></div><div class="ph p8"></div><div class="ph p9"></div></div></div>
+<div class="win notes"><div class="bar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="title">Notes</span></div>
+<div class="body"><div class="side"><div class="sel">Weekend plan<small>9:38 AM</small></div><div>Groceries<small>Yesterday</small></div><div>Book ideas<small>Tuesday</small></div><div>Bike fix<small>Monday</small></div></div>
+<div class="doc"><h1>Weekend plan</h1><div class="date">October 16, 2026 at 9:38 AM</div>
+<p>Leave Saturday morning, back by Sunday dinner.</p>
+<ul style="list-style:none;margin-left:0"><li><span class="chk on"></span>Book the cabin</li><li><span class="chk on"></span>Charge the camera</li><li><span class="chk"></span>Pack hiking boots</li><li><span class="chk"></span>Download offline maps</li><li><span class="chk"></span>Pick up coffee beans</li></ul></div></div></div>
+<div class="dock"><div class="app a1"></div><div class="app a2"></div><div class="app a3"></div><div class="app a4"></div><div class="app a5"></div><div class="app a6"></div><div class="app a7"></div><div class="app a8"></div></div>
+</body></html>

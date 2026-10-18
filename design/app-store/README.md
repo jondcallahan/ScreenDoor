@@ -23,6 +23,10 @@ To make them again:
 photos from Unsplash (fetched through picsum.photos, Unsplash License), and the Dock icons
 exported from the macOS apps with `sips -s format png -Z 128 <App>.app/Contents/Resources/<icon>.icns`.
 
+The website screenshots use `source/desktop-clownfish.html`, the same desktop with Apple's classic
+clownfish wallpaper (`assets/wallpaper-clownfish.jpg`, an upscale from
+https://www.reddit.com/r/wallpapers/comments/e7x2ty/). The App Store screenshots still use `desktop.html`.
+
 ## Updating the website screenshots without re-capturing
 
 `source/swap.swift` replaces the desktop inside an existing screenshot with a re-rendered one.
@@ -33,4 +37,5 @@ the old desktop, so the app's own controls on top are kept.
 2. `swiftc -O source/swap.swift -o swap`
 3. `./swap shot.jpg old.png new.png out.jpg [jpeg quality] [scale x y] [stop row]`
    The optional `scale x y` gives a starting position when the screen is mostly covered
-   (the keyboard shot used `0.4728 -131.1 218.7 800`).
+   (the keyboard shot used `0.4728 -131.1 218.7 800`, the iPhone session shot `0.4785 -48.9 216.9`
+   and the Vision Pro shot `0.48 286 86`).
