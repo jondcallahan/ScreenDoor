@@ -14,22 +14,52 @@
 <meta property="og:title" content="Screen Door">
 <meta property="og:description" content="See and control your Mac from your iPhone, iPad or Apple Vision Pro.">
 <meta property="og:image" content="https://screendoor.net/img/ipad-session.jpg">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="1050">
+<meta property="og:image:alt" content="A Mac's desktop shown full screen on iPad with Screen Door">
+<meta property="og:site_name" content="Screen Door">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Screen Door">
+<meta name="twitter:description" content="See and control your Mac from your iPhone, iPad or Apple Vision Pro.">
 <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" as="image" href="/img/ipad-session.jpg" fetchpriority="high">
 <link rel="stylesheet" href="/style.css">
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Screen Door",
-  "description": "See and control your Mac from your iPhone, iPad or Apple Vision Pro, using the Screen Sharing built into macOS.",
-  "url": "https://screendoor.net/",
-  "image": "https://screendoor.net/img/icon.png",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "iOS, iPadOS, visionOS",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://screendoor.net/#website",
+      "name": "Screen Door",
+      "url": "https://screendoor.net/",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://screendoor.net/#app",
+      "name": "Screen Door",
+      "alternateName": "Screen Door – Remote Desktop",
+      "description": "See and control your Mac from your iPhone, iPad or Apple Vision Pro, using the Screen Sharing built into macOS.",
+      "url": "https://screendoor.net/",
+      "image": "https://screendoor.net/img/icon.png",
+      "screenshot": [
+        "https://screendoor.net/img/ipad-session.jpg",
+        "https://screendoor.net/img/iphone-session.jpg",
+        "https://screendoor.net/img/vision-session.jpg"
+      ],
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "iOS, iPadOS, visionOS",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Jon Callahan" },
+      "sameAs": ["https://github.com/jondcallahan/ScreenDoor"]
+    }
+  ]
 }
 </script>
 </head>
