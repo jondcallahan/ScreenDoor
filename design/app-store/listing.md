@@ -24,7 +24,7 @@ Data collection: **No, we do not collect data from this app.**
 
 **Promotional text** (170):
 
-Free, private and open source. Reach your Mac from your iPhone, iPad or Apple Vision Pro with the Screen Sharing that's built into macOS.
+Free, private and open source. Reach your Mac from iPhone, iPad or Apple Vision Pro. On iPhone Duo, stand it up like a laptop for a Mac keyboard and trackpad.
 
 **Description** (4000):
 
@@ -45,6 +45,12 @@ MADE FOR TOUCH
 ON IPAD
 Use a trackpad, mouse or hardware keyboard as if you were at your desk. Each Mac opens in its own window, so you can keep two side by side.
 
+ON IPHONE DUO
+• Open it, and your Macs sit beside the one you're using. One button takes the Mac full screen, and the same button brings the list back.
+• Fold it partway and stand it up like a laptop. The Mac's screen moves to the top half, with a full Mac keyboard and a trackpad below the fold.
+• Mission Control, Spotlight, Switch Apps, screenshots and Lock Screen sit in the toolbar beside the screen.
+• Close it and you stay on your Mac, still connected.
+
 ON APPLE VISION PRO
 Look at something and tap to click it. Pinch and drag to scroll. The window takes the shape of your Mac's screen, and you can put it anywhere.
 
@@ -62,6 +68,10 @@ vnc,remote desktop,screen sharing,remote control,tailscale,viewer,mouse,keyboard
 
 **What's new:** leave empty for 1.0.
 
+## Screenshots
+
+`screenshots/iphone-duo/` has uncaptioned iPhone Duo screenshots at Apple's sizes (inner 2853 × 2007, outer 1398 × 2034). In October 2026 App Store Connect lists the sizes but has no upload slot for iPhone Duo yet, so keep using the iPhone 6.9" set. Duo screenshots become required in April 2027 for apps built with the iOS 27.1 SDK. See `../iphone-duo/README.md` to rebuild them.
+
 ## App Review
 
 **Sign-in required:** No. Screen Door has no account. It signs in to the reviewer's own Mac.
@@ -74,6 +84,11 @@ To test it, you need a Mac with Screen Sharing turned on (System Settings > Gene
 1. Open Screen Door. The Mac appears under "On This Network". Tap it, then tap Save.
 2. Tap the Mac and sign in with that Mac's username and password.
 3. Tap the pointer button to control the Mac. Tap the keyboard button to type.
+
+On iPhone Duo, the app has a few extra layouts:
+- Open the device. The list of Macs sits on the left and the Mac on the right. The full-screen button in the toolbar switches between the two.
+- Rotate the open device so the fold runs side to side, then fold it partway and stand it up like a laptop. The Mac's screen moves to the top half, and the bottom half shows a Mac keyboard and a trackpad.
+- Close the device. The session stays connected on the outer display.
 
 The attached video shows the app controlling a Mac from an iPhone, from launch to typing, in case a Mac isn't available.
 

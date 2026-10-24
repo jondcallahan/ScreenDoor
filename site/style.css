@@ -183,6 +183,38 @@ p { margin: 0; text-wrap: pretty; }
 .cell-ipad .device { position: absolute; left: 0; top: 4px; width: 150%; }
 .cell-away, .cell-private { justify-content: flex-end; }
 
+/* iPhone Duo */
+.duo { padding-bottom: 128px; }
+.duo-intro { max-width: 760px; margin-bottom: 56px; }
+.duo-intro h2 { font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.035em; }
+.duo-intro > p:last-child { font-size: 19px; color: var(--muted); margin-top: 16px; max-width: 46ch; }
+
+/* Folded and open, at equal screen heights. Column widths follow each render's shape. */
+.duo-pair {
+  display: grid; grid-template-columns: minmax(0, .752fr) minmax(0, 1.371fr);
+  gap: 8px; align-items: end; margin-bottom: 120px;
+}
+.duo-pair img { width: 100%; }
+
+.duo-laptop {
+  display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 56px; align-items: center;
+  background: var(--tint); border-radius: var(--r);
+  padding: 72px; margin-bottom: 96px; overflow: hidden;
+}
+.duo-laptop h3 { font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -0.03em; line-height: 1.15; }
+.duo-laptop p { font-size: 19px; color: var(--muted); margin-top: 14px; max-width: 40ch; }
+
+.duo-deck { width: 100%; border-radius: var(--r); background: #000; }
+
+.duo-points {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px;
+}
+.duo-points li { padding-top: 24px; border-top: 2px solid var(--blue); }
+.duo-points h3 { font-size: 19px; letter-spacing: -0.01em; line-height: 1.3; margin: 0 0 8px; }
+.duo-points p { color: var(--muted); }
+
 /* Keys */
 .keys { padding-bottom: 128px; }
 .keys-panel {
@@ -268,6 +300,8 @@ p { margin: 0; text-wrap: pretty; }
   .keys-panel { padding: 0 40px 48px; gap: 32px; }
   .keys-copy { padding-top: 48px; }
   .steps { gap: 28px; }
+  .duo-laptop { grid-template-columns: 1fr; padding: 48px 40px; gap: 32px; }
+  .duo-points { gap: 28px; }
 }
 
 /* Mobile: single column everywhere */
@@ -293,6 +327,11 @@ p { margin: 0; text-wrap: pretty; }
   .keys-panel { grid-template-columns: 1fr; padding: 0 28px 36px; gap: 28px; }
   .keys-copy { padding-top: 0; }
   .keys-phone { width: min(78%, 260px); order: -1; margin-top: -30%; }
+  .duo { padding-bottom: 72px; }
+  .duo-intro { margin-bottom: 36px; }
+  .duo-pair { margin-bottom: 72px; gap: 4px; }
+  .duo-laptop { padding: 32px 24px; margin-bottom: 56px; }
+  .duo-points { grid-template-columns: 1fr; gap: 28px; }
   .vision { padding-bottom: 72px; }
   .vision-copy { margin-bottom: 32px; }
   .setup { padding-bottom: 72px; }

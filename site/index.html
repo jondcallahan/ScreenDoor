@@ -44,12 +44,13 @@
       "@id": "https://screendoor.net/#app",
       "name": "Screen Door",
       "alternateName": "Screen Door – Remote Desktop",
-      "description": "See and control your Mac from your iPhone, iPad or Apple Vision Pro, using the Screen Sharing built into macOS.",
+      "description": "See and control your Mac from your iPhone, iPad or Apple Vision Pro, using the Screen Sharing built into macOS. Made for iPhone Duo.",
       "url": "https://screendoor.net/",
       "image": "https://screendoor.net/img/icon.png",
       "screenshot": [
         "https://screendoor.net/img/ipad-session.jpg",
         "https://screendoor.net/img/iphone-session.jpg",
+        "https://screendoor.net/img/duo-open-light.jpg",
         "https://screendoor.net/img/vision-session.jpg"
       ],
       "applicationCategory": "UtilitiesApplication",
@@ -117,6 +118,40 @@
       <h2>Private and open source</h2>
       <p>No account, no analytics, no tracking. The code is on GitHub.</p>
     </div>
+  </section>
+
+  <section class="wrap duo" id="iphone-duo" aria-labelledby="duo-title">
+    <div class="duo-intro reveal">
+      <p class="eyebrow">New</p>
+      <h2 id="duo-title">Made for iPhone Duo</h2>
+      <p>Open it, and your Macs sit beside the one you're using. Stand it up like a laptop, and it becomes a little MacBook.</p>
+    </div>
+
+    <!-- Renders of real captures in Apple's device artwork. See design/iphone-duo. -->
+    <div class="duo-pair reveal">
+      <picture>
+        <source srcset="/img/duo-folded-dark.jpg" media="(prefers-color-scheme: dark)">
+        <img src="/img/duo-folded-light.jpg" width="760" height="1011" loading="lazy" alt="iPhone Duo folded, showing a MacBook Pro's desktop">
+      </picture>
+      <picture>
+        <source srcset="/img/duo-open-dark.jpg" media="(prefers-color-scheme: dark)">
+        <img src="/img/duo-open-light.jpg" width="1500" height="1094" loading="lazy" alt="iPhone Duo open, with the list of Macs on the left and the MacBook Pro on the right">
+      </picture>
+    </div>
+
+    <div class="duo-laptop reveal">
+      <div class="duo-laptop-copy">
+        <h3>A MacBook in your pocket</h3>
+        <p>Fold it partway and stand it on a table. The Mac's screen moves to the top half. Below the fold, a full Mac keyboard with a trackpad under it. Tap ⌘, then C, to copy.</p>
+      </div>
+      <img class="duo-deck" src="/img/duo-deck.jpg" width="1400" height="458" loading="lazy" alt="The bottom half in the laptop pose: a Mac keyboard with function keys and arrow keys, and a trackpad below it">
+    </div>
+
+    <ul class="duo-points">
+      <li class="reveal"><h3>Open for two</h3><p>Your Macs on one side of the fold, the one you're using on the other. One button takes it full screen, and the same button brings the list back.</p></li>
+      <li class="reveal"><h3>Picks up where you left off</h3><p>Close it and you stay on your Mac, still connected. Open it again and the list is back beside it.</p></li>
+      <li class="reveal"><h3>Shortcuts in the toolbar</h3><p>Mission Control, Spotlight, Switch Apps, screenshots and Lock Screen stand in the bar beside the screen.</p></li>
+    </ul>
   </section>
 
   <section class="wrap keys">
