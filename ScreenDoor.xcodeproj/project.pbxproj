@@ -11,7 +11,9 @@
 		055DA0125EE4660624C541AC /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CF6743100FC61C7BE3008A /* Host.swift */; };
 		074BFF5B92AF685DB1547350 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA66E5E9C3A565F7B5E9504 /* Platform.swift */; };
 		12AC86A4FA74F37F521EEEE7 /* ScreenDoorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEEC1B874C2242574A67807 /* ScreenDoorApp.swift */; };
+		1C6D95731C93F680E0225B41 /* Fold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81956B002D2701187D5F36B1 /* Fold.swift */; };
 		23F43F0049F4764ABB405C75 /* MacModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5AA2563A756C6711174577 /* MacModel.swift */; };
+		325ECC4C7BD266778BE9FC60 /* MacBookDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10574730BE9DABF2CCCAFA73 /* MacBookDeck.swift */; };
 		39CA28B879711D4AAA6A9A25 /* MacBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3075B5F9D236A5B5CFA52 /* MacBrowser.swift */; };
 		3CE58CEE92C9465046DF795F /* RoyalVNCKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 79ED530D3B20969C016B159C /* RoyalVNCKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		704D0BD0054C8D3949EE0AED /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC5CC6E2A5E9FEB25694EC8 /* SessionView.swift */; };
@@ -41,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		06CF6743100FC61C7BE3008A /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
+		10574730BE9DABF2CCCAFA73 /* MacBookDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBookDeck.swift; sourceTree = "<group>"; };
 		1A5AA2563A756C6711174577 /* MacModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacModel.swift; sourceTree = "<group>"; };
 		28580F036BDDD3CEC7847F70 /* KeyInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyInputView.swift; sourceTree = "<group>"; };
 		2DEEC1B874C2242574A67807 /* ScreenDoorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDoorApp.swift; sourceTree = "<group>"; };
@@ -53,6 +56,7 @@
 		7AF8903300B2A56AAAF2D5BA /* HostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostListView.swift; sourceTree = "<group>"; };
 		7D0562534415CE947492D520 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		7EB3075B5F9D236A5B5CFA52 /* MacBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowser.swift; sourceTree = "<group>"; };
+		81956B002D2701187D5F36B1 /* Fold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fold.swift; sourceTree = "<group>"; };
 		8F34C05A6F0B63509B2F2AFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		997184A3024BCD2DAA62F54F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9F95990680994D00B5B902F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -100,11 +104,13 @@
 			isa = PBXGroup;
 			children = (
 				8F34C05A6F0B63509B2F2AFA /* Assets.xcassets */,
+				81956B002D2701187D5F36B1 /* Fold.swift */,
 				06CF6743100FC61C7BE3008A /* Host.swift */,
 				4320211E234718B1C559BF20 /* HostEditorView.swift */,
 				7AF8903300B2A56AAAF2D5BA /* HostListView.swift */,
 				9F95990680994D00B5B902F3 /* Info.plist */,
 				28580F036BDDD3CEC7847F70 /* KeyInputView.swift */,
+				10574730BE9DABF2CCCAFA73 /* MacBookDeck.swift */,
 				7EB3075B5F9D236A5B5CFA52 /* MacBrowser.swift */,
 				1A5AA2563A756C6711174577 /* MacModel.swift */,
 				4DA66E5E9C3A565F7B5E9504 /* Platform.swift */,
@@ -196,10 +202,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C6D95731C93F680E0225B41 /* Fold.swift in Sources */,
 				055DA0125EE4660624C541AC /* Host.swift in Sources */,
 				BB45E57CDADAAC5FE4C43A36 /* HostEditorView.swift in Sources */,
 				BA78889BEEAF729814C4B7E9 /* HostListView.swift in Sources */,
 				DBD5CDE4B0E366BF84F4C16A /* KeyInputView.swift in Sources */,
+				325ECC4C7BD266778BE9FC60 /* MacBookDeck.swift in Sources */,
 				39CA28B879711D4AAA6A9A25 /* MacBrowser.swift in Sources */,
 				23F43F0049F4764ABB405C75 /* MacModel.swift in Sources */,
 				074BFF5B92AF685DB1547350 /* Platform.swift in Sources */,

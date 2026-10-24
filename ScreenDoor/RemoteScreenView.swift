@@ -13,6 +13,9 @@ struct RemoteScreen: UIViewRepresentable {
         view.apply(mode: model.mode)
         view.setKeyboardActive(model.isKeyboardActive)
         view.setControlsTop(model.controlsTop)
+        view.setTabletopFold(model.tabletopFold)
+        view.setScreenAreaBottom(model.screenAreaBottom)
+        view.setTrackpadFrame(model.trackpadFrame)
         // Read here, not later, so SwiftUI calls this again when they change.
         let canTakeFocus = model.status == .connected && model.credentialRequest == nil && !model.isKeyboardActive
         if canTakeFocus { view.claimKeyboardFocus() }
@@ -28,6 +31,9 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
     private let scrollView = UIScrollView()
     private let screenView = UIView()
     private let cursorLayer = CALayer()
+    /// The MacBook deck's trackpad, below the keyboard when iPhone Duo is propped up like a laptop.
+    /// It doesn't take touches, so they reach this view's Mouse gestures.
+    private let trackpadSurface = UIView()
     private let keyInput: KeyInputView
 
     private var mode: InputMode = .view
@@ -38,6 +44,14 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
     private var hasFittedOnce = false
     /// Height at the bottom covered by the controls and, when it's up, the keyboard.
     private var obscuredBottom: CGFloat = 0
+    /// Top edge of the bottom controls, in window coordinates. Zero when there are none.
+    private var controlsTop: CGFloat = 0
+    /// While iPhone Duo is propped up like a laptop, the fold. The screen goes above it.
+    private var tabletopFold: CGRect?
+    /// Where the MacBook deck wants its trackpad, in window coordinates.
+    private var trackpadFrame: CGRect?
+    /// While folding toward the laptop pose, where the screen area ends. It follows the hinge.
+    private var screenAreaBottom: CGFloat?
     /// Where the user last clicked, or tapped in Look around mode, in screen coordinates. This is
     /// usually the text field they're about to type in, so it's what stays above the keyboard.
     private var focusPoint: CGPoint?
@@ -99,6 +113,15 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
         scrollView.decelerationRate = .fast
         addSubview(scrollView)
 
+        trackpadSurface.isUserInteractionEnabled = false
+        trackpadSurface.backgroundColor = UIColor(white: 1, alpha: 0.06)
+        trackpadSurface.layer.cornerRadius = 28
+        trackpadSurface.layer.cornerCurve = .continuous
+        trackpadSurface.layer.borderWidth = 1
+        trackpadSurface.layer.borderColor = UIColor(white: 1, alpha: 0.12).cgColor
+        trackpadSurface.alpha = 0
+        addSubview(trackpadSurface)
+
         screenView.layer.magnificationFilter = .linear
         screenView.layer.minificationFilter = .trilinear
         screenView.isAccessibilityElement = true
@@ -119,6 +142,9 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
         model.onCursorUpdate = { [weak self] cursor in
             self?.updateCursorImage(cursor)
         }
+        // Mid-session, show the screen straight away instead of waiting for it to change.
+        pendingFramebuffer = model.latestFramebuffer
+        if let cursor = model.latestCursor { updateCursorImage(cursor) }
         addInteraction(UIPointerInteraction(delegate: self))
     }
 
@@ -140,10 +166,50 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
     override func layoutSubviews() {
         super.layoutSubviews()
         let oldSize = scrollView.bounds.size
-        scrollView.frame = bounds
-        if oldSize != bounds.size {
+        var screenArea = bounds
+        if let screenAreaBottom {
+            screenArea.size.height = min(bounds.height, max(0, screenAreaBottom))
+        }
+        scrollView.frame = screenArea
+        layoutTrackpad()
+        if oldSize != screenArea.size {
             updateZoomLimits(refit: !hasFittedOnce || scrollView.zoomScale <= scrollView.minimumZoomScale + 0.001)
         }
+    }
+
+    private func layoutTrackpad() {
+        guard tabletopFold != nil, let trackpadFrame, window != nil else {
+            trackpadSurface.alpha = 0
+            return
+        }
+        trackpadSurface.frame = convert(trackpadFrame, from: nil)
+        trackpadSurface.alpha = 1
+    }
+
+    func setTrackpadFrame(_ frame: CGRect?) {
+        guard frame != trackpadFrame else { return }
+        trackpadFrame = frame
+        layoutTrackpad()
+    }
+
+    /// Called with the fold while iPhone Duo is propped up like a laptop, and nil otherwise.
+    func setTabletopFold(_ fold: CGRect?) {
+        guard fold != tabletopFold else { return }
+        tabletopFold = fold
+        layoutTrackpad()
+        setControlsTop(controlsTop)
+    }
+
+    /// Follows the hinge. Updates arrive at the system's pace, so each one eases into place.
+    func setScreenAreaBottom(_ bottom: CGFloat?) {
+        guard bottom != screenAreaBottom else { return }
+        screenAreaBottom = bottom
+        // The screen area changes size, so the screen refits to it unless it's zoomed in.
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut, .allowUserInteraction]) {
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+        }
+        setControlsTop(controlsTop)
     }
 
     // MARK: Rendering
@@ -275,8 +341,9 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
 
     private func updateZoomLimits(refit: Bool) {
         let content = screenView.bounds.size
-        guard content.width > 0, bounds.width > 0 else { return }
-        let fit = min(bounds.width / content.width, bounds.height / content.height)
+        let area = scrollView.bounds.size
+        guard content.width > 0, area.width > 0, area.height > 0 else { return }
+        let fit = min(area.width / content.width, area.height / content.height)
         scrollView.minimumZoomScale = fit
         scrollView.maximumZoomScale = max(fit * 8, 2)
         if refit {
@@ -286,6 +353,12 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
             scrollView.zoomScale = fit
         }
         centerContent()
+        if refit {
+            // The whole screen fits, so show all of it. The old scroll position belongs to the old
+            // size, and as the screen area shrinks toward the fold it would cut off the top.
+            scrollView.contentOffset = clampedOffset(CGPoint(x: -scrollView.contentInset.left,
+                                                             y: -scrollView.contentInset.top))
+        }
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? { screenView }
@@ -295,8 +368,9 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
     /// Keeps the screen centered when it's smaller than the viewport.
     private func centerContent() {
         let content = screenView.frame.size
-        let insetX = max(0, (bounds.width - content.width) / 2)
-        let insetY = max(0, (bounds.height - content.height) / 2)
+        let area = scrollView.bounds.size
+        let insetX = max(0, (area.width - content.width) / 2)
+        let insetY = max(0, (area.height - content.height) / 2)
         // The extra bottom inset lets the screen slide up above the keyboard.
         scrollView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY + obscuredBottom, right: insetX)
     }
@@ -305,7 +379,9 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
     /// top of the keyboard, so this also tracks the keyboard.
     func setControlsTop(_ controlsTop: CGFloat) {
         guard window != nil else { return }
-        let bottom = convert(bounds, to: nil).maxY
+        self.controlsTop = controlsTop
+        // Below the fold, the controls cover the deck, not the screen.
+        let bottom = convert(scrollView.frame, to: nil).maxY
         let newValue = controlsTop > 0 ? max(0, bottom - controlsTop) : 0
         guard abs(newValue - obscuredBottom) > 0.5 else { return }
         obscuredBottom = newValue
@@ -321,7 +397,7 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
         } else {
             let point = gesture.location(in: screenView)
             let scale = min(scrollView.minimumZoomScale * 2.5, scrollView.maximumZoomScale)
-            let size = CGSize(width: bounds.width / scale, height: bounds.height / scale)
+            let size = CGSize(width: scrollView.bounds.width / scale, height: scrollView.bounds.height / scale)
             scrollView.zoom(to: CGRect(x: point.x - size.width / 2, y: point.y - size.height / 2,
                                        width: size.width, height: size.height), animated: true)
         }
@@ -556,8 +632,9 @@ final class RemoteScreenView: UIView, UIScrollViewDelegate, UIGestureRecognizerD
         clickFeedback.play()
         model.click(.left, at: cursorPosition)
         setFocus(cursorPosition)
-        // Clicking with the text cursor almost always means a text field. Open the keyboard for it.
-        if isTextCursor, !model.isKeyboardActive {
+        // Clicking with the text cursor almost always means a text field. Open the keyboard for it,
+        // unless the MacBook deck's keyboard is already there.
+        if isTextCursor, !model.isKeyboardActive, tabletopFold == nil {
             model.isKeyboardActive = true
         }
     }

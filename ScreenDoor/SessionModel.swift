@@ -80,6 +80,17 @@ final class SessionModel {
     var credentialRequest: CredentialRequest?
     /// Top edge of the bottom controls in window coordinates, so the screen can slide above them.
     var controlsTop: CGFloat = 0
+    /// On iPhone Duo propped up like a laptop, the fold in the screen view's coordinates. The Mac's
+    /// screen goes above it, and the half below it is a trackpad.
+    var tabletopFold: CGRect?
+    /// How far iPhone Duo has folded toward the laptop pose: 0 lying flat, 1 propped up. The screen
+    /// and the deck follow it as the hinge moves, and the pose takes over at halfway.
+    var tabletopProgress: CGFloat = 0
+    /// While folding toward the laptop pose, where the screen area ends, in the screen view's
+    /// coordinates. It moves from the bottom of the view up to the fold.
+    var screenAreaBottom: CGFloat?
+    /// Where the MacBook deck puts its trackpad, in window coordinates.
+    var trackpadFrame: CGRect?
     /// The address this session is using, once one answered.
     private(set) var route: Route?
 
@@ -96,6 +107,10 @@ final class SessionModel {
     /// Called on the main thread when the framebuffer changes. The view pulls a fresh image.
     @ObservationIgnored var onFramebufferUpdate: ((VNCFramebuffer) -> Void)?
     @ObservationIgnored var onCursorUpdate: ((VNCCursor) -> Void)?
+    /// The latest picture and pointer, for a screen view that appears mid-session. On iPhone Duo,
+    /// folding and unfolding can rebuild the view while the session carries on.
+    @ObservationIgnored private(set) var latestFramebuffer: VNCFramebuffer?
+    @ObservationIgnored private(set) var latestCursor: VNCCursor?
 
     init(host: Host) {
         self.host = host
@@ -242,10 +257,17 @@ final class SessionModel {
 
     fileprivate func framebufferCreated(_ framebuffer: VNCFramebuffer) {
         framebufferSize = framebuffer.cgSize
+        latestFramebuffer = framebuffer
         onFramebufferUpdate?(framebuffer)
     }
 
+    fileprivate func cursorUpdated(_ cursor: VNCCursor) {
+        latestCursor = cursor
+        onCursorUpdate?(cursor)
+    }
+
     fileprivate func framebufferUpdated(_ framebuffer: VNCFramebuffer) {
+        latestFramebuffer = framebuffer
         onFramebufferUpdate?(framebuffer)
         guard status == .connecting, step == .loadingScreen else { return }
         status = .connected
@@ -357,7 +379,7 @@ private final class DelegateBridge: VNCConnectionDelegate {
     }
 
     func connection(_ connection: VNCConnection, didUpdateCursor cursor: VNCCursor) {
-        Task { @MainActor [weak self] in self?.model?.onCursorUpdate?(cursor) }
+        Task { @MainActor [weak self] in self?.model?.cursorUpdated(cursor) }
     }
 }
 
