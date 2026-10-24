@@ -139,16 +139,33 @@
       </picture>
     </div>
 
-    <div class="duo-laptop reveal">
-      <div class="duo-laptop-copy">
+    <!-- Screen recordings from the iPhone Duo simulator. Each plays once as it scrolls into view. -->
+    <div class="duo-panel duo-panel-flip reveal">
+      <figure class="clip" data-clip>
+        <div class="clip-device">
+          <video src="/img/duo-open-clip.mp4" poster="/img/duo-open-clip-poster.jpg" width="1280" height="900" muted playsinline preload="metadata" aria-label="Tapping MacBook Pro in the list. It connects and appears beside the list, then goes full screen."></video>
+          <img class="clip-frame" src="/img/duo-clip-frame.png" width="1400" height="1021" alt="">
+        </div>
+        <button class="clip-replay" type="button" data-clip-replay aria-label="Play again"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M10 3.5a6.5 6.5 0 1 1-6.3 8.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3.2 3.6v4.6h4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </figure>
+      <div class="duo-panel-copy">
+        <h3>Open for two</h3>
+        <p>Your Macs on one side of the fold, the one you're using on the other. One button takes it full screen, and the same button brings the list back.</p>
+      </div>
+    </div>
+
+    <div class="duo-panel duo-laptop reveal">
+      <div class="duo-panel-copy">
         <h3>A MacBook in your pocket</h3>
         <p>Fold it partway and stand it on a table. The Mac's screen moves to the top half. Below the fold, a full Mac keyboard with a trackpad under it. Tap ⌘, then C, to copy.</p>
       </div>
-      <img class="duo-deck" src="/img/duo-deck.jpg" width="1400" height="458" loading="lazy" alt="The bottom half in the laptop pose: a Mac keyboard with function keys and arrow keys, and a trackpad below it">
+      <figure class="clip" data-clip>
+        <video class="duo-deck" src="/img/duo-deck-clip.mp4" poster="/img/duo-deck-clip-poster.jpg" width="1400" height="458" muted playsinline preload="metadata" aria-label="The bottom half in the laptop pose: a Mac keyboard and a trackpad. Shift and Command light up as they're tapped."></video>
+        <button class="clip-replay" type="button" data-clip-replay aria-label="Play again"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M10 3.5a6.5 6.5 0 1 1-6.3 8.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3.2 3.6v4.6h4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </figure>
     </div>
 
     <ul class="duo-points">
-      <li class="reveal"><h3>Open for two</h3><p>Your Macs on one side of the fold, the one you're using on the other. One button takes it full screen, and the same button brings the list back.</p></li>
       <li class="reveal"><h3>Picks up where you left off</h3><p>Close it and you stay on your Mac, still connected. Open it again and the list is back beside it.</p></li>
       <li class="reveal"><h3>Shortcuts in the toolbar</h3><p>Mission Control, Spotlight, Switch Apps, screenshots and Lock Screen stand in the bar beside the screen.</p></li>
     </ul>
@@ -195,5 +212,30 @@
     <p class="legal">Mac, iPhone, iPad and Apple Vision Pro are trademarks of Apple Inc.</p>
   </div>
 </footer>
+<script>
+// Each clip plays once when most of it is on screen, and resets when it leaves. With Reduce Motion
+// it waits on its last frame until someone presses play.
+(() => {
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("[data-clip]").forEach((clip) => {
+    const video = clip.querySelector("video");
+    const button = clip.querySelector("[data-clip-replay]");
+    const play = () => { video.currentTime = 0; video.play().catch(() => {}); };
+    if (still) button.setAttribute("aria-label", "Play");
+    button.addEventListener("click", play);
+    let shown = false;
+    new IntersectionObserver((entries) => {
+      const entry = entries[entries.length - 1];
+      if (entry.intersectionRatio >= 0.5 && !shown) {
+        shown = true;
+        if (!still) play();
+      } else if (!entry.isIntersecting && shown) {
+        shown = false;
+        video.pause();
+      }
+    }, { threshold: [0, 0.5] }).observe(clip);
+  });
+})();
+</script>
 </body>
 </html>

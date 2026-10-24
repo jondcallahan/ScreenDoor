@@ -38,3 +38,20 @@ ffmpeg -y -i captures/open-macbook-deck.png -vf "crop=2600:850:0:1062,scale=1400
 
 For the App Store, `opaque.swift` writes the captures as opaque PNGs, which App Store Connect requires:
 `swift opaque.swift captures/folded-mac.png ../app-store/screenshots/iphone-duo/3-folded.png`.
+
+## Clips
+
+The site's two clips are screen recordings from the simulator: `clips/open-raw.mov` (tap a Mac, it appears beside the
+list, then full screen) and `clips/deck-raw.mov` (Shift and Command latching on the MacBook deck, with the faked
+fold). Record with `xcrun simctl io <udid> recordVideo --display=<inner display uuid> --codec=h264`.
+
+The simulator only writes a frame when the screen changes, so convert to a steady frame rate before trimming:
+
+```sh
+ffmpeg -i clips/open-raw.mov -filter_complex "[0:v]fps=30,split[s1][s2];[s1]trim=1.0:5.0,setpts=PTS-STARTPTS[a];[s2]trim=7.4:9.3,setpts=PTS-STARTPTS[b];[a][b]concat=n=2:v=1[c];[c]scale=1280:900:flags=lanczos,tpad=stop_mode=clone:stop_duration=1.2,format=yuv420p[v]" -map "[v]" -c:v libx264 -preset slow -crf 23 -movflags +faststart -an ../../site/img/duo-open-clip.mp4
+ffmpeg -i clips/deck-raw.mov -filter_complex "[0:v]fps=30,trim=1.4:8.8,setpts=PTS-STARTPTS,crop=2600:850:0:1062,scale=1400:458:flags=lanczos,tpad=stop_mode=clone:stop_duration=0.5,format=yuv420p[v]" -map "[v]" -c:v libx264 -preset slow -crf 22 -movflags +faststart -an ../../site/img/duo-deck-clip.mp4
+```
+
+Each clip's poster is its last frame (`ffmpeg -sseof -0.1 -i clip.mp4 -frames:v 1 poster.jpg`). The open clip plays
+under `duo-clip-frame.png`, a render with a see-through screen, and is cut to the screen's shape by
+`duo-clip-mask.png`. `clip-frame.py` makes both, and prints the screen's position for the CSS.

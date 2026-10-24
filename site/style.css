@@ -196,20 +196,46 @@ p { margin: 0; text-wrap: pretty; }
 }
 .duo-pair img { width: 100%; }
 
-.duo-laptop {
+/* Panels alternate sides: a playing clip beside a headline and a couple of lines. */
+.duo-panel {
   display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
   gap: 56px; align-items: center;
   background: var(--tint); border-radius: var(--r);
-  padding: 72px; margin-bottom: 96px; overflow: hidden;
+  padding: 72px; margin-bottom: 24px; overflow: hidden;
 }
-.duo-laptop h3 { font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -0.03em; line-height: 1.15; }
-.duo-laptop p { font-size: 19px; color: var(--muted); margin-top: 14px; max-width: 40ch; }
+.duo-panel-flip { grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); }
+.duo-laptop { margin-bottom: 96px; }
+.duo-panel h3 { font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -0.03em; line-height: 1.15; }
+.duo-panel p { font-size: 19px; color: var(--muted); margin-top: 14px; max-width: 40ch; }
 
-.duo-deck { width: 100%; border-radius: var(--r); background: #000; }
+/* The replay button sits below each clip, so it never covers the screen. */
+.clip { position: relative; margin: 0; padding-bottom: 56px; }
+/* The frame is a render with a see-through screen. The video sits in the screen's place, cut to its
+   exact shape by a mask from the same render (see design/iphone-duo/clip-frame.py). */
+.clip-device { position: relative; aspect-ratio: 1400 / 1021; }
+.clip-device video {
+  position: absolute;
+  left: 4.307%; top: 5.906%; width: 91.386%; height: 88.187%;   /* screen at 87, 87, 1846 × 1299 of 2020 × 1473 */
+  object-fit: cover; background: #000;
+  -webkit-mask: url(/img/duo-clip-mask.png) center / 100% 100% no-repeat;
+  mask: url(/img/duo-clip-mask.png) center / 100% 100% no-repeat;
+}
+.clip-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.clip-replay {
+  position: absolute; right: 0; bottom: 0;
+  display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  border: 0; border-radius: 999px; cursor: pointer;
+  color: var(--ink); background: rgb(127 127 127 / .14);
+  transition: background-color .2s ease, transform .2s var(--ease);
+}
+.clip-replay:hover { background: rgb(127 127 127 / .24); }
+.clip-replay:active { transform: scale(.94); }
+
+.duo-deck { display: block; width: 100%; height: auto; aspect-ratio: 1400 / 458; border-radius: var(--r); background: #000; }
 
 .duo-points {
   list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px;
 }
 .duo-points li { padding-top: 24px; border-top: 2px solid var(--blue); }
 .duo-points h3 { font-size: 19px; letter-spacing: -0.01em; line-height: 1.3; margin: 0 0 8px; }
@@ -300,7 +326,7 @@ p { margin: 0; text-wrap: pretty; }
   .keys-panel { padding: 0 40px 48px; gap: 32px; }
   .keys-copy { padding-top: 48px; }
   .steps { gap: 28px; }
-  .duo-laptop { grid-template-columns: 1fr; padding: 48px 40px; gap: 32px; }
+  .duo-panel, .duo-panel-flip { grid-template-columns: 1fr; padding: 48px 40px; gap: 32px; }
   .duo-points { gap: 28px; }
 }
 
@@ -330,7 +356,9 @@ p { margin: 0; text-wrap: pretty; }
   .duo { padding-bottom: 72px; }
   .duo-intro { margin-bottom: 36px; }
   .duo-pair { margin-bottom: 72px; gap: 4px; }
-  .duo-laptop { padding: 32px 24px; margin-bottom: 56px; }
+  .duo-panel { padding: 32px 24px; }
+  .duo-laptop { margin-bottom: 56px; }
+  .duo-points { grid-template-columns: 1fr; }
   .duo-points { grid-template-columns: 1fr; gap: 28px; }
   .vision { padding-bottom: 72px; }
   .vision-copy { margin-bottom: 32px; }
